@@ -24,7 +24,7 @@ def departmentApi(request, id=0):
         if department_serializer.is_valid():
             department_serializer.save()
             return JsonResponse("Data Added Successfully")
-        return JsonResponse("Data is invalid. Failed to Add", safe=False)
+        return JsonResponse("Data is invalid. Failed to Add",safe=False)
     # if PUT, get the change from requests using id, serialize the change and if valid, add to DB
     elif request.method=='PUT':
         department_data=JSONParser().parse(request)
@@ -32,10 +32,10 @@ def departmentApi(request, id=0):
         department_serializer=DepartmentSerializer(department,data=department_data)
         if department_serializer.is_valid():
             department_serializer.save()
-            return JsonResponse('Update Successful', safe=False)
+            return JsonResponse('Update Successful',safe=False)
         return JsonResponse("Data is invalid. Failed to Update")
     # If DELETE, get the ID to be deleted then delete
     elif request.method=='DELETE':
         department=Department.objects.get(DepartmentId=id)
         department.delete()
-        return JsonResponse("Deleted Successfully", safe=False)
+        return JsonResponse("Deleted Successfully",safe=False)
