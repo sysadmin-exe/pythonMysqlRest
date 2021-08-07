@@ -1,0 +1,1 @@
+This is my first Python REST API. It can read and write to a MYSQL DB
