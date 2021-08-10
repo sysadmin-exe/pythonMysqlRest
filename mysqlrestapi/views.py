@@ -7,10 +7,11 @@ from django.http.response import JsonResponse
 from mysqlrestapi.models import Department,Employees
 from mysqlrestapi.serializers import DepartmentSerializer,EmployeeSerializer
 
+from django.core.files.storage import default_storage
 
 # Create your views here.
 @csrf_exempt
-# Function that contains tasks to be done when department table is queried
+# API Method - Function that contains tasks to be done when department table is queried
 def departmentApi(request, id=0):
     #if GET, get all objects in the department table and serialize it
     if request.method=='GET': 
@@ -42,7 +43,7 @@ def departmentApi(request, id=0):
 
 
 @csrf_exempt
-# Function that contains tasks to be done when department table is queried
+# API Method - Function that contains tasks to be done when department table is queried
 def employeeApi(request, id=0):
     #if GET, get all objects in the department table and serialize it
     if request.method=='GET': 
@@ -71,3 +72,10 @@ def employeeApi(request, id=0):
         employee=Employees.objects.get(EmployeesId=id)
         employee.delete()
         return JsonResponse("Deleted Successfully",safe=False)
+
+# API method for files upload
+@csrf_exempt
+def savefile(request):
+    file=request.FILES['file']
+    file_name=default_storage.save(file.name, file)
+    return JsonResponse(file_name, safe=False)
